@@ -4,22 +4,22 @@ pygame.display.set_caption("snake")
 
 #paramètres du jeu
 
-taille_ecran=600
-nombre_carreaux=20                      #nombre pair
-vitesse=2
-width=taille_ecran
-height=taille_ecran 
-taille_carreau= taille_ecran/nombre_carreaux
-couleur_serpent=(250,105,105)
-couleur_fruit=(250,105,250)
-couleur1_damier=(155, 245, 165)
-couleur2_damier=(155, 230, 190)
+SIZE_ecran=600
+SQUARE_NUMBER=20                      #nombre pair
+speed=2
+width=SIZE_ecran
+height=SIZE_ecran 
+SQUARE_SIZE= SIZE_ecran/SQUARE_NUMBER
+SNAKE_COLOR =(250,105,105)
+FRUIT_COLOR=(250,105,250)
+GRID_COLOR1=(155, 245, 165)
+GRID_COLOR2 =(155, 230, 190)
                      
 
 
 #fonctions générales
 
-def listeaddition(l1,l2):
+def list_sum(l1,l2):
     l3=[]
     for i in range(len(l1)):
         l3.append(l1[i]+l2[i])
@@ -28,26 +28,26 @@ def listeaddition(l1,l2):
 def convpixel(pos):                        #effectue la conversion d'une position en carreaux [c1,c2] en pixels sur l'écran [x,y]
     L=[]
     for j in pos:
-        L.append(j*taille_carreau,)
+        L.append(j*SQUARE_SIZE,)
     return(L)
 
 #fonctions d'affichage
 
 
-def afficher_carreau(position:list,couleur:tuple,taille:int):       #affiche un carré 
-    rect2=pygame.Rect(position[0],position[1],taille,taille)
-    pygame.draw.rect(screen,couleur,rect2)
+def display_square(position:list,color:tuple,SIZE:int):       #affiche un carré 
+    rect2=pygame.Rect(position[0],position[1],SIZE,SIZE)
+    pygame.draw.rect(screen,color,rect2)
     pygame.display.update()
 
 
-def afficher_damier():
-    screen.fill( couleur1_damier )                             
-    for j in range(nombre_carreaux):                                         #construction du damier 
-        y=taille_carreau*j
-        for i in range(nombre_carreaux//2):
-            x=2*taille_carreau*i +taille_carreau*(j%2)
-            rect = pygame.Rect(x, y, taille_carreau, taille_carreau)
-            pygame.draw.rect(screen, couleur2_damier, rect)
+def display_grid():
+    screen.fill( GRID_COLOR1 )                             
+    for j in range(SQUARE_NUMBER):                                         #construction du damier 
+        y=SQUARE_SIZE*j
+        for i in range(SQUARE_NUMBER//2):
+            x=2*SQUARE_SIZE*i +SQUARE_SIZE*(j%2)
+            rect = pygame.Rect(x, y, SQUARE_SIZE, SQUARE_SIZE)
+            pygame.draw.rect(screen,GRID_COLOR2,rect)
 
         
 
@@ -61,7 +61,7 @@ screen = pygame.display.set_mode( (width, height) )
 
 class snake():
     def __init__(self):
-        self.vitesse=[[0,1],[1,0],[-1,0],[0,-1]]      #haut:0 droite:1 gauche:2 bas:3 
+        self.speed=[[0,1],[1,0],[-1,0],[0,-1]]      #haut:0 droite:1 gauche:2 bas:3 
         self.size=3
         self.direction='right'
         self.body=[[8,10],[9,10],[10,10]]
@@ -75,15 +75,15 @@ class snake():
         if direction=='down':
             return 3
     def update(self):
-        self.body.append(listeaddition(self.body[-1],self.vitesse[self.directionconv(self.direction)]))
+        self.body.append(list_sum(self.body[-1],self.speed[self.directionconv(self.direction)]))
         self.body.pop(0)
     def display(self):
         for l in range(self.size):
-            afficher_carreau(convpixel(self.body[l]),couleur_serpent,taille_carreau)
+            display_square(convpixel(self.body[l]),SNAKE_COLOR ,SQUARE_SIZE)
 
             
 
-serpent=snake()
+snake =snake()
 
 
 
@@ -108,10 +108,10 @@ while True:
         
         pass 
    
-    clock.tick(vitesse)
-    serpent.update()
-    afficher_damier()
-    serpent.display()
+    clock.tick(speed)
+    snake .update()
+    display_grid()
+    snake .display()
 
     
 
