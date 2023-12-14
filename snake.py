@@ -63,19 +63,19 @@ class snake():
     def __init__(self):
         self.vitesse=[[0,1],[1,0],[-1,0],[0,-1]]      #haut:0 droite:1 gauche:2 bas:3 
         self.size=3
-        self.dir='right'
+        self.direction='right'
         self.body=[[8,10],[9,10],[10,10]]
-    def dirconv(self,dir):
-        if dir=='right':
+    def directionconv(self,direction):
+        if direction=='right':
             return 1
-        if dir=='left':
+        if direction=='left':
             return 2
-        if dir=='up':
+        if direction=='up':
             return 0
-        if dir=='down':
+        if direction=='down':
             return 3
     def update(self):
-        self.body.append(listeaddition(self.body[-1],self.vitesse[self.dirconv(self.dir)]))
+        self.body.append(listeaddition(self.body[-1],self.vitesse[self.directionconv(self.direction)]))
         self.body.pop(0)
     def display(self):
         for l in range(self.size):
@@ -92,17 +92,17 @@ while True:
     for event in pygame.event.get():
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_q:
-                if not dir=='right':
-                    dir='left'
+                if not direction=='right':
+                    direction='left'
             if event.key == pygame.K_d:
-                if not dir=='left':
-                    dir='right'
+                if not direction=='left':
+                    direction='right'
             if event.key == pygame.K_s:
-                if not dir=='up':
-                    dir='down'
+                if not direction=='up':
+                    direction='down'
             if event.key == pygame.K_z:
-                if not dir=='down':
-                    dir='up'
+                if not direction=='down':
+                    direction='up'
         
 
         
